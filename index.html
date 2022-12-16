@@ -1,40 +1,69 @@
 ﻿<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
 
-        <title>sample</title>
+<head>
+    <meta charset="utf-8">
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 这里替换标题 -->
+    <title>Inky Go</title>
 
-        <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    </head>
+    <link rel="stylesheet" href="style.css">
 
-    <body>
+</head>
 
-        <div class="outerContainer">
-            <h3 class="written-in-ink">
-                <a href="https://www.inklestudios.com/ink">WRITTEN IN INK</a>
-            </h3>
-
-            <div id="controls" class="buttons">
-                <a id="rewind" title="Restart story from beginning">restart</a>
-                <a id="save" title="Save progress">save</a>
-                <a id="reload" title="Reload from save point">load</a>
-                <a id="theme-switch" title="Switch theme">theme</a>
-            </div>
-
-            <div id="story" class="container">
-                <div class="header">
-                    <h1>sample</h1>
-                    <h2 class="byline"></h2>
+<body>
+    <div class="outerContainer">
+        <div id="load-dialog" class="modal-overlay">
+            <div class="modal-data">
+                <p class="modal-title">读取进度</p>
+                <div id="load-dialog-point-1" class="modal-sl-point">
+                    <p id="load-dialog-point-1-content">存档 1</p>
                 </div>
+                <div id="load-dialog-point-2" class="modal-sl-point">
+                    <p id="load-dialog-point-2-content">存档 2</p>
+                </div>
+                <div id="load-dialog-point-3" class="modal-sl-point">
+                    <p id="load-dialog-point-3-content">存档 3</p>
+                </div>
+                <a id="close-load-dialog" title="关闭">关闭</a>
             </div>
         </div>
+        <div id="save-dialog" class="modal-overlay">
+            <div class="modal-data">
+                <p class="modal-title">保存进度</p>
+                <div id="save-dialog-point-1" class="modal-sl-point">
+                    <p id="save-dialog-point-1-content">存档 1</p>
+                </div>
+                <div id="save-dialog-point-2" class="modal-sl-point">
+                    <p id="save-dialog-point-2-content">存档 2</p>
+                </div>
+                <div id="save-dialog-point-3" class="modal-sl-point">
+                    <p id="save-dialog-point-3-content">存档 3</p>
+                </div>
+                <a id="close-save-dialog" title="关闭">关闭</a>
+            </div>
+        </div>
+        <div id="controls" class="buttons">
+            <a id="rewind" title="重头开始">重新开始</a>
+            <a id="save" title="保存当前进度">保存进度</a>
+            <a id="reload" title="读取已保存的进度">读取进度</a>
+            <a id="theme-switch" title="切换主题">切换主题</a>
+        </div>
 
-        <script src="ink.js"></script>
-        <script src="Untitled.js"></script>
-        <script src="main.js"></script>
-    </body>
+        <div id="story" class="container">
+            <div class="header">
+                <!-- 这里替换标题 -->
+                <h1>Inky Go</h1>
+                <h2 class="byline"></h2>
+            </div>
+        </div>
+    </div>
+
+    <script src="ink.js"></script>
+    <script src="Untitled.js"></script>
+    <script src="main.js"></script>
+</body>
+
 </html>

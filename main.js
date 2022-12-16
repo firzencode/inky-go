@@ -36,8 +36,8 @@
 
     // page features setup
     setupTheme(globalTagTheme);
-    var hasSave = loadSavePoint();
-    setupButtons(hasSave);
+    // var hasSave = loadSavePoint();
+    setupButtons();
 
     // Set initial save point
     savePoint = story.state.toJson();
@@ -329,7 +329,7 @@
     }
 
     // Used to hook up the functionality for global functionality buttons
-    function setupButtons(hasSave) {
+    function setupButtons() {
 
         let rewindEl = document.getElementById("rewind");
         if (rewindEl) rewindEl.addEventListener("click", function (event) {
@@ -339,42 +339,174 @@
             restart();
         });
 
-        let saveEl = document.getElementById("save");
-        if (saveEl) saveEl.addEventListener("click", function (event) {
-            try {
-                window.localStorage.setItem('save-state', savePoint);
-                document.getElementById("reload").removeAttribute("disabled");
-                window.localStorage.setItem('theme', document.body.classList.contains("dark") ? "dark" : "");
-            } catch (e) {
-                console.warn("Couldn't save state");
-            }
+        // let saveEl = document.getElementById("save");
+        // if (saveEl) saveEl.addEventListener("click", function (event) {
+        //     // try {
+        //     //     window.localStorage.setItem('save-state', savePoint);
+        //     //     document.getElementById("reload").removeAttribute("disabled");
+        //     //     window.localStorage.setItem('theme', document.body.classList.contains("dark") ? "dark" : "");
+        //     // } catch (e) {
+        //     //     console.warn("Couldn't save state");
+        //     // }
+        //     openSaveDialog();
+        // });
 
-        });
+        // let reloadEl = document.getElementById("reload");
+        // if (!hasSave) {
+        //     reloadEl.setAttribute("disabled", "disabled");
+        // }
+        // reloadEl.addEventListener("click", function (event) {
+        //     if (reloadEl.getAttribute("disabled"))
+        //         return;
 
-        let reloadEl = document.getElementById("reload");
-        if (!hasSave) {
-            reloadEl.setAttribute("disabled", "disabled");
-        }
-        reloadEl.addEventListener("click", function (event) {
-            if (reloadEl.getAttribute("disabled"))
-                return;
-
-            removeAll("p");
-            removeAll("img");
-            try {
-                let savedState = window.localStorage.getItem('save-state');
-                if (savedState) story.state.LoadJson(savedState);
-            } catch (e) {
-                console.debug("Couldn't load save state");
-            }
-            continueStory(true);
-        });
+        //     removeAll("p");
+        //     removeAll("img");
+        //     try {
+        //         let savedState = window.localStorage.getItem('save-state');
+        //         if (savedState) story.state.LoadJson(savedState);
+        //     } catch (e) {
+        //         console.debug("Couldn't load save state");
+        //     }
+        //     continueStory(true);
+        // });
 
         let themeSwitchEl = document.getElementById("theme-switch");
         if (themeSwitchEl) themeSwitchEl.addEventListener("click", function (event) {
             document.body.classList.add("switched");
             document.body.classList.toggle("dark");
         });
+
+        /* ----- inky go ----- */
+        let loadProgressCloseBtn = document.getElementById("close-load-dialog");
+        if (loadProgressCloseBtn) {
+            loadProgressCloseBtn.addEventListener("click", function (event) {
+                closeLoadDialog();
+            })
+        }
+
+        let loadProgressShowBtn = document.getElementById("reload");
+        if (loadProgressShowBtn) {
+            loadProgressShowBtn.addEventListener("click", function (event) {
+                openLoadDialog();
+            })
+        }
+
+        let saveDialogCloseBtn = document.getElementById("close-save-dialog");
+        if (saveDialogCloseBtn) {
+            saveDialogCloseBtn.addEventListener("click", function (event) {
+                closeSaveDialog();
+            })
+        }
+
+        let saveDialogOpenBtn = document.getElementById("save");
+        if (saveDialogOpenBtn) {
+            saveDialogOpenBtn.addEventListener("click", function (event) {
+                openSaveDialog();
+            })
+        };
+
+        for (let i = 1; i <= 3; i++) {
+            let btn = document.getElementById(`load-dialog-point-${i}`);
+            if (btn) {
+                btn.addEventListener("click", function (event) {
+                    loadData(i);
+                })
+            }
+        }
+
+        for (let i = 1; i <= 3; i++) {
+            let btn = document.getElementById(`save-dialog-point-${i}`);
+            if (btn) {
+                btn.addEventListener("click", function (event) {
+                    saveData(i);
+                })
+            }
+        }
+
+        closeSaveDialog()
+        closeLoadDialog()
+        refreshProgressDialog();
+    }
+
+    function closeLoadDialog() {
+        let dialog = document.getElementById("load-dialog")
+        dialog.style.visibility = "hidden";
+    }
+
+    function openLoadDialog() {
+        let dialog = document.getElementById("load-dialog")
+        dialog.style.visibility = "visible";
+    }
+
+    function closeSaveDialog() {
+        let dialog = document.getElementById("save-dialog")
+        dialog.style.visibility = "hidden";
+    }
+
+    function openSaveDialog() {
+        let dialog = document.getElementById("save-dialog")
+        dialog.style.visibility = "visible";
+    }
+
+    function saveData(index) {
+        try {
+            window.localStorage.setItem(`save-state-${index}`, savePoint);
+        } catch (e) {
+            console.warn("Couldn't save state");
+        }
+        closeSaveDialog();
+        refreshProgressDialog();
+    }
+
+    function loadData(index) {
+        if (!isSaveDataExist(index)) {
+            return;
+        }
+
+        removeAll("p");
+        removeAll("img");
+        try {
+            let savedState = window.localStorage.getItem(`save-state-${index}`);
+            if (savedState) story.state.LoadJson(savedState);
+        } catch (e) {
+            console.debug("Couldn't load save state");
+        }
+        refreshProgressDialog();
+        closeLoadDialog();
+        continueStory(true);
+    }
+
+    function isSaveDataExist(index) {
+        try {
+            let savedState = window.localStorage.getItem(`save-state-${index}`);
+            if (savedState) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (e) {
+            console.debug("Couldn't load save state");
+            return false;
+        }
+    }
+
+    function refreshProgressDialog() {
+        for (let i = 1; i <= 3; i++) {
+            let content = document.getElementById(`load-dialog-point-${i}`)
+            if (isSaveDataExist(i)) {
+                content.innerHTML = `存档 ${i}`
+            } else {
+                content.innerHTML = `没有数据`
+            }
+        }
+        for (let i = 1; i <= 3; i++) {
+            let content = document.getElementById(`save-dialog-point-${i}`)
+            if (isSaveDataExist(i)) {
+                content.innerHTML = `存档 ${i}，点击覆盖`
+            } else {
+                content.innerHTML = `没有数据，点击保存`
+            }
+        }
     }
 
 })(storyContent);
