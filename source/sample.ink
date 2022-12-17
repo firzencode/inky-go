@@ -7,7 +7,7 @@
 \- 单句模式
 \- 更加好用的 BGM / SE 控制
 \- Image 横向可以控制大小
-\- 背景图片显示 / 隐藏 / 过渡
+\- 背景图片显示 / 隐藏
 \- 重置随机数
 \- 键盘控制：按键盘选择选项、单句模式步进
 \- 字体、颜色优化
@@ -26,7 +26,8 @@
 -> bgm_se
 + [Image 横向可以控制大小]
 -> img_width
--> END
++ [背景图片显示 / 隐藏]
+-> bg
 
 == bgm_se ==
 
@@ -105,5 +106,27 @@ w 指宽度，可以使用 0% ~ 100% 相对文字区域宽度，也可以用 px 
 链接中的斜杠要转义
 # SIZE_IMAGE: 50%@https:\/\/ahayoo.com/inky-sample-1/image.jpeg
 # SIZE_IMAGE: 200px@https:\/\/ahayoo.com/inky-sample-1/image.jpeg
+
+-> menu
+
+== bg ==
+
+显示 & 切换背景图片: \# BG: https:\/\/www.ahayoo.com/inky-sample-1/white_bg_1.jpeg
+隐藏背景图片：\# BG: hide
+注意：通常来说，使用背景图后，需要进一步手动修改模版的各种颜色，以确保文字能正常显示
+-> bg_menu
+== bg_menu ==
+
++ [显示1]
+# BG: https:\/\/www.ahayoo.com/inky-sample-1/white_bg_1.jpeg
+-> bg
++ [显示2]
+# BG: https:\/\/www.ahayoo.com/inky-sample-1/white_bg_2.jpeg
+-> bg
++ [隐藏]
+# BG: hide
+-> bg
++ [返回]
+-> menu
 
 -> menu

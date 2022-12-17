@@ -97,7 +97,7 @@ h2 {
     margin: 0 auto;
     padding: 20px;
     padding-top: 4em;
-    background: white;
+    /* background: white; */
 }
 
 .switched .container {
@@ -193,7 +193,7 @@ img {
     top: 4px;
     -webkit-user-select: none;
     user-select: none;
-    background: white;
+    /* background: white; */
     transition: color 0.6s, background 0.6s;
 }
 
@@ -230,7 +230,7 @@ body.dark {
 }
 
 .dark .container {
-    background: black;
+    /* background: black; */
 }
 
 .dark .written-in-ink {
@@ -259,7 +259,7 @@ body.dark {
 }
 
 .dark #controls {
-    background: black;
+    /* background: black; */
 }
 
 /* inky go */
@@ -416,4 +416,17 @@ body.dark {
     -moz-animation: blink 1s linear infinite;
     -ms-animation: blink 1s linear infinite;
     -o-animation: blink 1s linear infinite;
+}
+
+/* 背景图 */
+.bg {
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    object-fit:cover;
 }

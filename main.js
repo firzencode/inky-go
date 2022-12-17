@@ -130,16 +130,23 @@
                     if (idx != null) {
                         let size = content.substr(0, idx).trim();
                         let src = content.substr(idx + 1).trim();
-                        console.log(size)
-                        imageElement.src = src
-                        imageElement.style.width = size
+                        imageElement.src = src;
+                        imageElement.style.width = size;
                         storyContainer.appendChild(imageElement);
-    
+
                         showAfter(delay, imageElement);
                         delay += 200.0;
                     }
                 }
 
+                // 背景图
+                if (splitTag && splitTag.property == "BG") {
+                    if (splitTag.val == "hide") {
+                        hideBg();
+                    } else {
+                        showBg(splitTag.val);
+                    }
+                }
                 // AUDIO: src
                 if (splitTag && splitTag.property == "AUDIO") {
                     if ('audio' in this) {
@@ -615,6 +622,23 @@
         var hint = document.getElementById("single-sentence-hint")
         if (hint) {
             hint.parentElement.removeChild(hint)
+        }
+    }
+
+    function hideBg() {
+        let bgImg = document.getElementById("bg_img")
+        if (bgImg) {
+            bgImg.style.visibility = "hidden";
+        }
+    }
+
+    function showBg(src) {
+        let bgImg = document.getElementById("bg_img")
+        if (bgImg) {
+            bgImg.onload = function() {
+                bgImg.style.visibility = "visible";
+            }
+            bgImg.src = src;
         }
     }
 
