@@ -1,6 +1,6 @@
 (function (storyContent) {
-    // 单句模式开关
-    const IS_SINGLE_SENTENCE_MODE_ENABLED = true
+    // 单句模式开关，打开为 true，关闭为 false，默认关闭
+    const IS_SINGLE_SENTENCE_MODE_ENABLED = false
 
     // Create ink story from the content using inkjs
     var story = new inkjs.Story(storyContent);
@@ -72,6 +72,51 @@
                 // Detect tags of the form "X: Y". Currently used for IMAGE and CLASS but could be
                 // customised to be used for other things too.
                 var splitTag = splitPropertyTag(tag);
+
+                // 背景音乐
+                if (splitTag && splitTag.property == "BGM") {
+                    if (splitTag.val == "stop") {
+                        // 停止
+                        console.log("stop bgm")
+                        if ('bgm' in this) {
+                            this.bgm.pause();
+                            this.bgm.load();
+                            this.bgm.loop = true;
+                        }
+                    } else if (splitTag.val == "pause") {
+                        // 暂停
+                        console.log("pause bgm")
+                        if ('bgm' in this) {
+                            this.bgm.pause();
+                        }
+                    } else if (splitTag.val == "resume") {
+                        // 继续
+                        console.log("resume bgm")
+                        if ('bgm' in this) {
+                            this.bgm.play()
+                        }
+                    } else {
+                        // 播放
+                        console.log("play bgm: " + splitTag.val);
+                        if ('bgm' in this) {
+                            this.bgm.pause();
+                            this.bgm.removeAttribute('src');
+                            this.bgm.load();
+                        }
+
+                        this.bgm = new Audio(splitTag.val);
+                        this.bgm.play();
+                        this.bgm.loop = true;
+                    }
+                }
+
+                // SE
+                if (splitTag && splitTag.property == "SE") {
+                    // 播放 SE
+                    console.log("play se: " + splitTag.val);
+                    let se = new Audio(splitTag.val);
+                    se.play();
+                }
 
                 // AUDIO: src
                 if (splitTag && splitTag.property == "AUDIO") {
