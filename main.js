@@ -1,4 +1,6 @@
 (function (storyContent) {
+    // 单句模式开关
+    const IS_SINGLE_SENTENCE_MODE_ENABLED = true
 
     // Create ink story from the content using inkjs
     var story = new inkjs.Story(storyContent);
@@ -152,6 +154,12 @@
             // Fade in paragraph after a short delay
             showAfter(delay, paragraphElement);
             delay += 200.0;
+
+            if (IS_SINGLE_SENTENCE_MODE_ENABLED && story.currentChoices.length == 0) {
+                // 中断 continue，等待用户点击
+                addSingleSentenceHint();
+                break;
+            }
         }
 
         // Create HTML choices from ink choices
@@ -185,6 +193,11 @@
 
                 // Aaand loop
                 continueStory();
+
+                // 防止冒泡
+                if (IS_SINGLE_SENTENCE_MODE_ENABLED) {
+                    event.stopPropagation();
+                }
             });
         });
 
@@ -295,7 +308,6 @@
 
     // Loads save state if exists in the browser memory
     function loadSavePoint() {
-
         try {
             let savedState = window.localStorage.getItem('save-state');
             if (savedState) {
@@ -426,6 +438,16 @@
         closeSaveDialog()
         closeLoadDialog()
         refreshProgressDialog();
+
+        if (IS_SINGLE_SENTENCE_MODE_ENABLED) {
+            storyContainer.addEventListener("click", function (event) {
+                // removeSingleSentenceHint();
+                if (story.canContinue) {
+                    removeSingleSentenceHint();
+                    continueStory(false)
+                }
+            })
+        }
     }
 
     function closeLoadDialog() {
@@ -506,6 +528,26 @@
             } else {
                 content.innerHTML = `没有数据，点击保存`
             }
+        }
+    }
+
+    function addSingleSentenceHint() {
+        removeSingleSentenceHint()
+        if (story.canContinue) {
+            setTimeout(function () {
+                var hint = document.createElement('p');
+                hint.innerHTML = "▽";
+                hint.id = "single-sentence-hint"
+                storyContainer.appendChild(hint);
+                hint.classList.add("blink")
+            }, 400);
+        }
+    }
+
+    function removeSingleSentenceHint() {
+        var hint = document.getElementById("single-sentence-hint")
+        if (hint) {
+            hint.parentElement.removeChild(hint)
         }
     }
 
