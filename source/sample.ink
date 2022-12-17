@@ -9,7 +9,6 @@
 \- Image 横向可以控制大小
 \- 背景图片显示 / 隐藏
 \- 重置随机数
-\- 键盘控制：按键盘选择选项、单句模式步进
 \- 字体、颜色优化
 
 项目地址：https:\/\/gitee.com/firzencode/inky-go
@@ -28,6 +27,9 @@
 -> img_width
 + [背景图片显示 / 隐藏]
 -> bg
++ [单句模式]
+-> single_sentence
+
 
 == bgm_se ==
 
@@ -115,18 +117,38 @@ w 指宽度，可以使用 0% ~ 100% 相对文字区域宽度，也可以用 px 
 隐藏背景图片：\# BG: hide
 注意：通常来说，使用背景图后，需要进一步手动修改模版的各种颜色，以确保文字能正常显示
 -> bg_menu
+
 == bg_menu ==
 
 + [显示1]
 # BG: https:\/\/www.ahayoo.com/inky-sample-1/white_bg_1.jpeg
--> bg
+-> bg_menu
 + [显示2]
 # BG: https:\/\/www.ahayoo.com/inky-sample-1/white_bg_2.jpeg
--> bg
+-> bg_menu
 + [隐藏]
 # BG: hide
--> bg
+-> bg_menu
 + [返回]
 -> menu
 
 -> menu
+
+== single_sentence ==
+
+通常来说，只要修改 html 中的开关，即可全局调整单句模式，这里为了演示，进行动态修改
+
++ [开启单句模式]
+# SINGLE_SENTENCE: on
+- - 已开启单句模式
++ [关闭单句模式]
+# SINGLE_SENTENCE: off
+- - 已关闭单句模式
+- 以下将输出一段文本：
+生命之色涡旋流转，
+七重之门现于世间，
+力量之塔君临九天！
+究↓极↑
+# SINGLE_SENTENCE: off
+-> menu
+

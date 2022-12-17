@@ -3,7 +3,12 @@
 
 (function (storyContent) {
     // 单句模式开关，打开为 true，关闭为 false，默认关闭
-    const IS_SINGLE_SENTENCE_MODE_ENABLED = false
+    let IS_SINGLE_SENTENCE_MODE_ENABLED = false
+
+    // 通常随机数 SEED 会被存档，即使 load & save，下一个随机数也是相同的
+    // 如果想每次读档后的随机数不同，则打开它
+    // 打开为 true，关闭为 false，默认关闭
+    let REFRESH_RANDOM_SEED_WHEN_LOAD = false
 
     // Create ink story from the content using inkjs
     var story = new inkjs.Story(storyContent);
@@ -145,6 +150,14 @@
                         hideBg();
                     } else {
                         showBg(splitTag.val);
+                    }
+                }
+
+                if (splitTag && splitTag.property == "SINGLE_SENTENCE") {
+                    if (splitTag.val == "on") {
+                        IS_SINGLE_SENTENCE_MODE_ENABLED = true;
+                    } else if (splitTag.val == "off") {
+                        IS_SINGLE_SENTENCE_MODE_ENABLED = false;
                     }
                 }
                 // AUDIO: src
@@ -513,15 +526,16 @@
         closeLoadDialog()
         refreshProgressDialog();
 
-        if (IS_SINGLE_SENTENCE_MODE_ENABLED) {
-            storyContainer.addEventListener("click", function (event) {
-                // removeSingleSentenceHint();
-                if (story.canContinue) {
-                    removeSingleSentenceHint();
-                    continueStory(false)
-                }
-            })
-        }
+        storyContainer.addEventListener("click", function (event) {
+            // removeSingleSentenceHint();
+            if (!IS_SINGLE_SENTENCE_MODE_ENABLED) {
+                return
+            }
+            if (story.canContinue) {
+                removeSingleSentenceHint();
+                continueStory(false)
+            }
+        })
     }
 
     function closeLoadDialog() {
@@ -569,6 +583,10 @@
         }
         refreshProgressDialog();
         closeLoadDialog();
+        if (REFRESH_RANDOM_SEED_WHEN_LOAD) {
+            story.state.storySeed = new Date().getTime() % 100;
+            story.state.previousRandom = 0
+        }
         continueStory(true);
     }
 
@@ -590,17 +608,17 @@
         for (let i = 1; i <= 3; i++) {
             let content = document.getElementById(`load-dialog-point-${i}`)
             if (isSaveDataExist(i)) {
-                content.innerHTML = `存档 ${i}`
+                content.innerText = `存档 ${i}`
             } else {
-                content.innerHTML = `没有数据`
+                content.innerText = `没有数据`
             }
         }
         for (let i = 1; i <= 3; i++) {
             let content = document.getElementById(`save-dialog-point-${i}`)
             if (isSaveDataExist(i)) {
-                content.innerHTML = `存档 ${i}，点击覆盖`
+                content.innerText = `存档 ${i}，点击覆盖`
             } else {
-                content.innerHTML = `没有数据，点击保存`
+                content.innerText = `没有数据，点击保存`
             }
         }
     }
@@ -610,7 +628,7 @@
         if (story.canContinue) {
             setTimeout(function () {
                 var hint = document.createElement('p');
-                hint.innerHTML = "▽";
+                hint.innerText = "▽";
                 hint.id = "single-sentence-hint"
                 storyContainer.appendChild(hint);
                 hint.classList.add("blink")
@@ -635,7 +653,7 @@
     function showBg(src) {
         let bgImg = document.getElementById("bg_img")
         if (bgImg) {
-            bgImg.onload = function() {
+            bgImg.onload = function () {
                 bgImg.style.visibility = "visible";
             }
             bgImg.src = src;
