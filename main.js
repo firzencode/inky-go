@@ -1,3 +1,6 @@
+// modified by InkyGo Template
+// https://gitee.com/firzencode/inky-go
+
 (function (storyContent) {
     // 单句模式开关，打开为 true，关闭为 false，默认关闭
     const IS_SINGLE_SENTENCE_MODE_ENABLED = false
@@ -110,12 +113,31 @@
                     }
                 }
 
-                // SE
+                // 音效
                 if (splitTag && splitTag.property == "SE") {
                     // 播放 SE
                     console.log("play se: " + splitTag.val);
                     let se = new Audio(splitTag.val);
                     se.play();
+                }
+
+                // 可控制宽度的图片
+                if (splitTag && splitTag.property == "SIZE_IMAGE") {
+                    let imageElement = document.createElement('img');
+
+                    let content = splitTag.val;
+                    let idx = content.indexOf("@");
+                    if (idx != null) {
+                        let size = content.substr(0, idx).trim();
+                        let src = content.substr(idx + 1).trim();
+                        console.log(size)
+                        imageElement.src = src
+                        imageElement.style.width = size
+                        storyContainer.appendChild(imageElement);
+    
+                        showAfter(delay, imageElement);
+                        delay += 200.0;
+                    }
                 }
 
                 // AUDIO: src
