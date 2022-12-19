@@ -140,7 +140,7 @@ w 指宽度，可以使用 0% ~ 100% 相对文字区域宽度，也可以用 px 
 # BG: https:\/\/www.ahayoo.com/inky-sample-1/white_bg_1.jpeg
 
 隐藏
-# BG: https:\/\/www.ahayoo.com/inky-sample-1/white_bg_2.jpeg
+# BG: hide
 
 ```
 
