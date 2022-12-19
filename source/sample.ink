@@ -1,3 +1,5 @@
+LIST kettleState = cold, boiling, recently_boiled
+
 这是 Inky Go 测试项目。
 
 目前有以下功能：
