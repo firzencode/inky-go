@@ -1,5 +1,9 @@
 # InkyGo
 
+优化与扩展 Inky 模版
+
+sample: [猛击此处](https://ahayoo.com/inky-go/)
+
 ## 功能列表
 - [x] 中文化菜单
 - [x] 多个档位，存档读档
