@@ -2,6 +2,8 @@
 
 优化与扩展 Inky 模版
 
+当前对应 Inky 版本：[0.14.1](https://github.com/inkle/inky/releases/tag/0.14.1)
+
 sample: [猛击此处](https://ahayoo.com/inky-go/)
 
 ## 功能列表
@@ -14,7 +16,7 @@ sample: [猛击此处](https://ahayoo.com/inky-go/)
 - [x] 重置随机数
 - [x] 字体、颜色优化
 - [ ] 背景图片显示过渡效果
-- [ ] 修复 Inky 偶尔无法自动滚动到底部的问题
+- [x] 修复 Inky 偶尔无法自动滚动到底部的问题
 - [ ] 背景与文字的进一步融合
 
 ## 使用方式
