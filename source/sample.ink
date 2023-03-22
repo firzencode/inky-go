@@ -31,7 +31,8 @@ LIST kettleState = cold, boiling, recently_boiled
 -> bg
 + [单句模式]
 -> single_sentence
-
++ [自动样式]
+-> auto_style
 
 == bgm_se ==
 
@@ -154,3 +155,13 @@ w 指宽度，可以使用 0% ~ 100% 相对文字区域宽度，也可以用 px 
 # SINGLE_SENTENCE: off
 -> menu
 
+== auto_style ==
+# AUTO_STYLE: <路过的光呆>@role1
+
+<盖乌斯·范·巴埃萨> 冒险者，你是为了什么而战斗的？
+<路过的光呆> ?
+<盖乌斯·范·巴埃萨> 那么我倒想问，你认为，艾欧泽亚存在真实吗？
+<路过的光呆> （无法跳过）
+<盖乌斯·范·巴埃萨> ……获得新生！
+
+-> menu

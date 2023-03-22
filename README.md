@@ -18,6 +18,7 @@ sample: [猛击此处](https://ahayoo.com/inky-go/)
 - [ ] 背景图片显示过渡效果
 - [x] 修复 Inky 偶尔无法自动滚动到底部的问题
 - [ ] 背景与文字的进一步融合
+- [x] 自动样式，根据设置的正则表达式，对一行内容自动套用 css 样式
 
 ## 使用方式
 
@@ -161,3 +162,26 @@ w 指宽度，可以使用 0% ~ 100% 相对文字区域宽度，也可以用 px 
 ![](images/image9.jpg)
 
 修改 main.js 中的 REFRESH_RANDOM_SEED_WHEN_LOAD 为 true
+
+### 自动样式
+
+通过设置自动样式，在每行文本显示之前，会进行正则表达式检查
+
+如果搜索到了，则对该行文本赋予指定的 CSS Style
+
+这样，就不用每行文本都增加 Inky 自带的 #CLASS 标签了
+
+```
+# AUTO_STYLE: regex@style
+
+例如
+# AUTO_STYLE: <路过的光呆>@role1
+
+根目录的 style.css 添加
+.role1 {
+    color: #ee0000   
+}
+
+```
+
+![](images/image10.jpg)

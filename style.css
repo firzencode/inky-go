@@ -436,3 +436,8 @@ body.dark {
     width: 100%;
     object-fit: cover;
 }
+
+/* 自定义样式 */
+.role1 {
+    color: #ee0000   
+}

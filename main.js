@@ -18,6 +18,8 @@
     let savedTheme;
     let globalTagTheme;
 
+    const autoStyleRegArray = []
+
     // Global tags - those at the top of the ink file
     // We support:
     //  # theme: dark
@@ -153,6 +155,14 @@
                     }
                 }
 
+                // 自动样式
+                if (splitTag && splitTag.property == "AUTO_STYLE") {
+                    autoStyleRegArray.push({
+                        reg: new RegExp(splitTag.val.split("@")[0]),
+                        style: splitTag.val.split("@")[1]
+                    })
+                    console.log(autoStyleRegArray)
+                }
                 if (splitTag && splitTag.property == "SINGLE_SENTENCE") {
                     if (splitTag.val == "on") {
                         IS_SINGLE_SENTENCE_MODE_ENABLED = true;
@@ -233,6 +243,15 @@
             var paragraphElement = document.createElement('p');
             paragraphElement.innerHTML = paragraphText;
             storyContainer.appendChild(paragraphElement);
+
+            // 自动样式，如果 paragraphText 匹配到了某个正则表达式，则应用对应的样式
+            for (var i = 0; i < autoStyleRegArray.length; i++) {
+                let reg = autoStyleRegArray[i].reg;
+                let style = autoStyleRegArray[i].style;
+                if (reg.test(paragraphText)) {
+                    paragraphElement.classList.add(style);
+                }
+            }
 
             // Add any custom classes derived from ink tags
             for (var i = 0; i < customClasses.length; i++)
