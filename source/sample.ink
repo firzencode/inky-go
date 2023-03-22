@@ -12,7 +12,7 @@ LIST kettleState = cold, boiling, recently_boiled
 \- 背景图片显示 / 隐藏
 \- 重置随机数
 \- 字体、颜色优化
-
+\- 自动样式
 项目地址：https:\/\/gitee.com/firzencode/inky-go
 
 + [继续]
@@ -157,6 +157,9 @@ w 指宽度，可以使用 0% ~ 100% 相对文字区域宽度，也可以用 px 
 
 == auto_style ==
 # AUTO_STYLE: <路过的光呆>@role1
+
+全局已启用自动样式，如果正则表达式检测到了，会自动套用 CSS 样式
+例如，下列文本中，对光呆的对话将会采用 role1 的 style
 
 <盖乌斯·范·巴埃萨> 冒险者，你是为了什么而战斗的？
 <路过的光呆> ?

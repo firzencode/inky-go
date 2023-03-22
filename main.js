@@ -161,7 +161,6 @@
                         reg: new RegExp(splitTag.val.split("@")[0]),
                         style: splitTag.val.split("@")[1]
                     })
-                    console.log(autoStyleRegArray)
                 }
                 if (splitTag && splitTag.property == "SINGLE_SENTENCE") {
                     if (splitTag.val == "on") {
