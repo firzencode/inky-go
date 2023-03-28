@@ -2,6 +2,56 @@
 // https://gitee.com/firzencode/inky-go
 
 (function (storyContent) {
+    const playBgm = (src) => {
+        console.log("play bgm: " + src);
+        if ('bgm' in this) {
+            this.bgm.pause();
+            this.bgm.removeAttribute('src');
+            this.bgm.load();
+        }
+
+        this.bgm = new Audio(src);
+        this.bgm.play();
+        this.bgm.loop = true;
+    }
+
+    const resumeBgm = () => {
+        console.log("resume bgm")
+        if ('bgm' in this) {
+            this.bgm.play()
+        }
+    }
+
+    const pauseBgm = () => {
+        console.log("pause bgm")
+        if ('bgm' in this) {
+            this.bgm.pause();
+        }
+    }
+
+    const stopBgm = () => {
+        console.log("stop bgm")
+        if ('bgm' in this) {
+            this.bgm.pause();
+            this.bgm.load();
+            this.bgm.loop = true;
+        }
+    }
+
+    const isBgmPlaying = () => {
+        if ('bgm' in this) {
+            return !this.bgm.paused;
+        }
+        return false;
+    }
+
+    const getBgmSrc = () => {
+        if ('bgm' in this) {
+            return this.bgm.src;
+        }
+        return undefined;
+    }
+    
     // 单句模式开关，打开为 true，关闭为 false，默认关闭
     let IS_SINGLE_SENTENCE_MODE_ENABLED = false
 
@@ -674,55 +724,4 @@
             bgImg.src = src;
         }
     }
-
-    const playBgm = (src) => {
-        console.log("play bgm: " + src);
-        if ('bgm' in this) {
-            this.bgm.pause();
-            this.bgm.removeAttribute('src');
-            this.bgm.load();
-        }
-
-        this.bgm = new Audio(src);
-        this.bgm.play();
-        this.bgm.loop = true;
-    }
-
-    const resumeBgm = () => {
-        console.log("resume bgm")
-        if ('bgm' in this) {
-            this.bgm.play()
-        }
-    }
-
-    const pauseBgm = () => {
-        console.log("pause bgm")
-        if ('bgm' in this) {
-            this.bgm.pause();
-        }
-    }
-
-    const stopBgm = () => {
-        console.log("stop bgm")
-        if ('bgm' in this) {
-            this.bgm.pause();
-            this.bgm.load();
-            this.bgm.loop = true;
-        }
-    }
-
-    const isBgmPlaying = () => {
-        if ('bgm' in this) {
-            return !this.bgm.paused;
-        }
-        return false;
-    }
-
-    const getBgmSrc = () => {
-        if ('bgm' in this) {
-            return this.bgm.src;
-        }
-        return undefined;
-    }
-
 })(storyContent);
