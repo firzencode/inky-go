@@ -87,36 +87,16 @@
                 if (splitTag && splitTag.property == "BGM") {
                     if (splitTag.val == "stop") {
                         // 停止
-                        console.log("stop bgm")
-                        if ('bgm' in this) {
-                            this.bgm.pause();
-                            this.bgm.load();
-                            this.bgm.loop = true;
-                        }
+                        stopBgm()
                     } else if (splitTag.val == "pause") {
                         // 暂停
-                        console.log("pause bgm")
-                        if ('bgm' in this) {
-                            this.bgm.pause();
-                        }
+                        pauseBgm()
                     } else if (splitTag.val == "resume") {
                         // 继续
-                        console.log("resume bgm")
-                        if ('bgm' in this) {
-                            this.bgm.play()
-                        }
+                        resumeBgm()
                     } else {
                         // 播放
-                        console.log("play bgm: " + splitTag.val);
-                        if ('bgm' in this) {
-                            this.bgm.pause();
-                            this.bgm.removeAttribute('src');
-                            this.bgm.load();
-                        }
-
-                        this.bgm = new Audio(splitTag.val);
-                        this.bgm.play();
-                        this.bgm.loop = true;
+                        playBgm(splitTag.val)
                     }
                 }
 
@@ -578,7 +558,17 @@
 
     function saveData(index) {
         try {
+            // 保存数据
             window.localStorage.setItem(`save-state-${index}`, savePoint);
+
+            if (isBgmPlaying()) {
+                // 如果有 BGM，则保存
+                window.localStorage.setItem(`save-state-${index}-bgm`, getBgmSrc());
+            } else {
+                // 没有就清空数据
+                window.localStorage.removeItem(`save-state-${index}-bgm`);
+            }
+
         } catch (e) {
             console.warn("Couldn't save state");
         }
@@ -596,6 +586,13 @@
         try {
             let savedState = window.localStorage.getItem(`save-state-${index}`);
             if (savedState) story.state.LoadJson(savedState);
+
+            let savedBgm = window.localStorage.getItem(`save-state-${index}-bgm`);
+            if (savedBgm) {
+                playBgm(savedBgm);
+            } else {
+                stopBgm();
+            }
         } catch (e) {
             console.debug("Couldn't load save state");
         }
@@ -676,6 +673,56 @@
             }
             bgImg.src = src;
         }
+    }
+
+    const playBgm = (src) => {
+        console.log("play bgm: " + src);
+        if ('bgm' in this) {
+            this.bgm.pause();
+            this.bgm.removeAttribute('src');
+            this.bgm.load();
+        }
+
+        this.bgm = new Audio(src);
+        this.bgm.play();
+        this.bgm.loop = true;
+    }
+
+    const resumeBgm = () => {
+        console.log("resume bgm")
+        if ('bgm' in this) {
+            this.bgm.play()
+        }
+    }
+
+    const pauseBgm = () => {
+        console.log("pause bgm")
+        if ('bgm' in this) {
+            this.bgm.pause();
+        }
+    }
+
+    const stopBgm = () => {
+        console.log("stop bgm")
+        if ('bgm' in this) {
+            this.bgm.pause();
+            this.bgm.load();
+            this.bgm.loop = true;
+        }
+    }
+
+    const isBgmPlaying = () => {
+        if ('bgm' in this) {
+            return !this.bgm.paused;
+        }
+        return false;
+    }
+
+    const getBgmSrc = () => {
+        if ('bgm' in this) {
+            return this.bgm.src;
+        }
+        return undefined;
     }
 
 })(storyContent);
