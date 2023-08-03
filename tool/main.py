@@ -13,7 +13,8 @@ class MainWindow(wx.Frame):
 
     def init_ui(self):
         v_box = wx.BoxSizer(wx.VERTICAL)
-
+        hint = wx.StaticText(self, label="导入时会覆盖原有文件！请注意备份！")
+        v_box.Add(hint, proportion=1, flag=wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, border=15)
         button_import = wx.Button(self, label="选择文件夹导入 Inky Go 模版")
         button_import.Bind(wx.EVT_BUTTON, self.open_project)
         v_box.Add(button_import, proportion=1,
