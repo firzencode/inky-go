@@ -1,2 +1,6 @@
 .DS_Store
 .vscode/settings.json
+tool/build
+tool/dist
+tool/windows_spec
+tool/Inky Go.spec
