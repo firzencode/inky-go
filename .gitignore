@@ -2,3 +2,4 @@
 .vscode/settings.json
 tool/build
 tool/dist
+tool/windows_spec
