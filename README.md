@@ -4,7 +4,11 @@
 
 当前对应 Inky 版本：[0.14.1](https://github.com/inkle/inky/releases/tag/0.14.1)
 
-sample: [猛击此处](https://ahayoo.com/inky-go/)
+示例参考: [猛击此处](https://ahayoo.com/inky-go/)
+
+## 使用方法
+
+安装方法与全功能说明：[Inky Go 文档](docs/index.md)
 
 ## 功能列表
 
@@ -19,9 +23,8 @@ sample: [猛击此处](https://ahayoo.com/inky-go/)
 | 随机数改进 | 可以设置随机数动态 seed，避免读档后随机数仍然相同 |
 | 其他调整 | 修复滚动问题、文字样式优化等 |
 
-## 使用方法
-
-安装方法与全功能说明：[Inky Go 文档](docs/index.md)
+<br>
+<br>
 
 - - - - - 
 
