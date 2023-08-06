@@ -12,7 +12,7 @@
 
 | 步骤 | 图例 |
 | -- | -- |
-| 从下载页，下载最新版工具| ![Alt text](../images/install_3.png) |
+| 从下载页，下载最新版工具，[点我前往下载地址](https://gitee.com/firzencode/inky-go/releases/tag/v1.0)| ![Alt text](../images/install_3.png) |
 | 下载后打开工具 | ![Alt text](../images/install_4.png) |
 | 点击导入按钮 | ![Alt text](../images/install_5.png) |
 | 选择刚才导出的文件夹 | ![Alt text](../images/install_6.png) |
